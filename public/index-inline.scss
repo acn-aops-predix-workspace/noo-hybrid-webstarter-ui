@@ -21,13 +21,15 @@ $inuit-webfont-path: "/bower_components/px-typography-design/type";
 html {
   position: relative;
   min-height: 100%;
+  overflow: hidden;
 }
 body {
-  margin-bottom: calculateRem(60px);
+  // margin-bottom: calculateRem(60px);
 }
 html,body {
   margin: 0;
-  background: var(--px-seed-header-backgrounde-color, $px-page-html-background-color);
+  // background: var(--px-seed-header-backgrounde-color, $px-page-html-background-color);
+  background: #0C1419;
   font-family: $predix-font-family;
   font-weight: normal;
 }

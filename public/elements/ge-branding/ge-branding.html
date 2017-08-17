@@ -1,0 +1,28 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/px-branding-bar/px-branding-bar.html"/>
+
+<dom-module id="ge-branding-bar">
+  <template>
+     <style>
+      /* :host {
+        display: block;
+      } */
+
+       px-branding-bar {
+        --px-branding-bar-background-color: #012939;
+      } 
+    </style> 
+
+    <px-branding-bar application-title="Intelligent Networks"></px-branding-bar>
+
+  </template>
+  <script>
+    (function () {
+      'use strict';
+
+      Polymer({
+        is: 'ge-branding-bar'
+      });
+    })();
+  </script>
+</dom-module>

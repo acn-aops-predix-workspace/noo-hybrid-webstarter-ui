@@ -5,15 +5,16 @@
 <link rel="import" href="seed-app-styles.html">
 
 <!-- app route -->
-<link rel="import" href="../../bower_components/app-route/app-location.html">
-<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html" />
+<link rel="import" href="../../bower_components/px-app-helpers/px-app-route/px-app-route.html" />
+
 <!-- px components -->
 <link rel="import" href="../../bower_components/px-app-nav/px-app-nav.html">
 <link rel="import" href="../../bower_components/px-view/px-view.html">
 <link rel="import" href="../../bower_components/px-login/px-login.html">
 <!-- seed app components -->
 <link rel="import" href="../ge-svg-logo/ge-svg-logo.html">
-<link rel="import" href="../predix-logo/predix-logo.html">
+<!-- <link rel="import" href="../predix-logo/predix-logo.html"> -->
 <link rel="import" href="../seed-footer/seed-footer.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 
@@ -21,13 +22,48 @@
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 <link rel="import" href="../../bower_components/px-polymer-font-awesome/px-polymer-font-awesome.html">
 
+<link rel="import" href="../../elements/ge-branding/ge-branding.html">
+
+<link rel="import" href="../../bower_components/px-app-helpers/px-app-header/px-app-header.html" />
+<link rel="import" href="../../bower_components/px-app-helpers/px-app-asset/px-app-asset-behavior-selectable.html" />
+<link rel="import" href="../../bower_components/px-app-helpers/px-app-asset/px-app-asset-behavior-activatable.html" />
+<link rel="import" href="../../bower_components/px-app-helpers/px-app-asset/px-app-asset-behavior-graph.html" />
+
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+
+<link rel="stylesheet" href="../../bower_components/font-awesome/css/font-awesome.css">
+
+<link rel="import" href="../../bower_components/px-key-value-pair/px-key-value-pair.html"/>
+
+<link rel="import" href="../../bower_components/px-data-table/px-data-table.html"/>
+
+<link rel="import" href="../../elements/views/dashboard-view.html">
+<link rel="import" href="../../elements/views/problems-view.html">
+<link rel="import" href="../../elements/views/scenarios-view.html">
+<link rel="import" href="../../elements/views/solutions-view.html">
+<link rel="import" href="../../elements/views/admin-view.html">
+<link rel="import" href="../../elements/views/notification-view.html">
+
 <dom-module id="seed-app">
   <template>
+    <style>
+      px-app-nav {
+        width: calc(100vw - 100px);
+        --px-app-nav-background-color: #0C1419;
+        --px-app-nav-item-background-color: #0C1419;
+        --px-app-nav-item-icon-color: #fff;
+        --px-app-nav-item-text-color: #fff;
+        --px-app-nav-item-background-color--selected: #1A2932;
+        --px-app-nav-item-background-color--pressed: #1A2932;
+        --px-app-nav-item-text-color--selected: #fff;
+        --px-app-nav-item-icon-color--selected: #fff;
+      }
+    </style>
 
     <!-- apply imported seed app style module -->
     <style include="seed-app-styles"></style>
 
-    <header role="banner">
+    <!-- <header role="banner">
       <div class="viewport flex flex--justify flex--middle">
         <h3>
           <ge-svg-logo class="u-mr--"></ge-svg-logo> [[appHeader]]
@@ -36,67 +72,54 @@
           <px-login style="margin-left: auto;"></px-login>
         </div>
       </div>
-    </header>
+    </header> -->
 
     <div class="viewport">
 
-      <div class="content-wrapper">
-        <px-app-nav
-          class="navbar"
-          nav-items="[[navItems]]"
-          path-prefix="[[pathPrefix]]">
+      <ge-branding-bar></ge-branding-bar>
+
+      <div class="flex flex--middle">
+        <px-app-nav id="appNav" items='[
+        { "label": "Dashboard", "id": "dashboard", "icon": "px-fea:analysis" },
+        { "label": "Events", "id": "events", "icon": "px-fea:analysis" },
+        { "label": "Scenarios", "id": "scenarios", "icon": "px-fea:dashboard" },
+        { "label": "Solutions", "id": "solutions", "icon": "px-fea:asset" },
+        { "label": "Admin", "id": "admin", "icon": "px-fea:administration" }]' selected-route="{{navRoute}}">
         </px-app-nav>
-
-        <main class="u-pt-- u-pr-- u-pl--" role="main">
-
-          <!-- app-location captures url and assigns _route value -->
-          <app-location
-            id="carbonLocation"
-            route="{{_route}}"
-            use-hash-as-path>
-          </app-location>
-
-          <!-- main /rmd route and view -->
-          <app-route
-            route="[[_route]]"
-            pattern="/rmd"
-            active="{{_rmdActive}}">
-          </app-route>
-          <px-view id="rmdPxView"
-            active="[[_rmdActive]]"
-            element-href="/elements/views/rmd-view.html"
-            load-async="true">
-          </px-view>
-
-          <!-- about route and view -->
-          <app-route
-            route="[[_route]]"
-            pattern="/about"
-            active="{{_aboutActive}}">
-          </app-route>
-          <px-view
-            active="[[_aboutActive]]"
-            element-href="/elements/views/about-view.html">
-          </px-view>
-
-          <!-- /simple-asset route and view -->
-          <app-route
-            route="[[_route]]"
-            pattern="/simple-asset"
-            active="{{_simple-assetActive}}">
-          </app-route>
-          <px-view
-            active="[[_simple-assetActive]]"
-            element-href="/elements/views/simple-asset-view.html">
-         </px-view>
-
-        </main>
-
+        <notification-view></notification-view>
       </div>
+
+      <!-- <main class="u-pt-- u-pr-- u-pl--" role="main"> -->
+      <main role="main">
+
+        <app-location route="{{_route}}" use-hash-as-path></app-location>
+
+        <px-app-route route="{{_route}}" use-hash-as-path update-nav-route nav-route="{{navRoute}}">
+        </px-app-route>
+
+        <iron-pages selected='{{selectedPage}}'>
+          <div>
+            <dashboard-view></dashboard-view>
+          </div>
+          <div>
+            <problems-view></problems-view>
+          </div>
+          <div>
+            <scenarios-view></scenarios-view>
+          </div>
+          <div>
+            <solutions-view></solutions-view>
+          </div>
+          <div>
+            <admin-view></admin-view>
+          </div>
+        </iron-pages>
+
+      </main>
+
     </div>
 
-    <seed-footer footer-links='[[footerLinks]]'></seed-footer>
-    <iron-ajax id="configAjaxEl" url="/config" auto></iron-ajax>
+    <!-- <seed-footer footer-links='[[footerLinks]]'></seed-footer> -->
   </template>
   <script>
     Polymer({
@@ -116,7 +139,7 @@
         //Global application object
         global: {
           type: Object,
-          value: function() {
+          value: function () {
             return {
               version: '1.0',
               name: 'Predix UI Seed - RMD Reference App'
@@ -128,39 +151,20 @@
         // See http://fontawesome.io/icons/ for available icons
         navItems: {
           type: Array,
-          value: function() {
-            return [
-              {
-                "label": "Asset Monitoring",
-                "path": "/rmd",
-                "icon": "fa-line-chart"
-              },
-              {
-                "label": "About",
-                "path": "/about",
-                "icon": "fa-info-circle"
-              }
-              //Uncomment this block to show the Simple Asset navigation item on the menu.
-              /* // asset-nav-item
-              ,{
-                "label": "Simple Asset",
-                "path": "/simple-asset",
-                "icon": "fa-sitemap"
-              }
-              // end asset-nav-item */
-            ]
+          value: function () {
+            return []
           }
         },
 
         footerLinks: {
           type: Array,
-          value: function() {
+          value: function () {
             return [{
               "label": "Learn More",
               "href": "https://www.predix.io/resources/tutorials",
               "target": "_blank"
             }
-          ]
+            ]
           }
         },
 
@@ -168,37 +172,58 @@
         pathPrefix: {
           type: String,
           value: '#'
+        },
+
+        selectedPage: {
+          type: Number
         }
       },
 
       observers: ['_routeChanged(_route)'],
 
-      ready: function(){
-        this._checkForDefaultRoute();
-        this.$.configAjaxEl.addEventListener('response', function(evt) {
-          // We're getting some global config from the server.
-          // console.log('config', evt.detail.response);
-          this.appHeader = evt.detail.response.appHeader;
-          this.$.rmdPxView.elementData = evt.detail.response;
-        }.bind(this));
+      listeners: {
+        'px-app-asset-selected': 'selectedView'
       },
 
-      _checkForDefaultRoute: function() {
+      selectedView: function (evt) {
+        console.log(evt.detail.route[0]);
+        var selectedRoute = evt.detail.route[0];
+        if (selectedRoute === 'dashboard') {
+          this.selectedPage = 0;
+        } else if (selectedRoute === 'events') {
+          this.selectedPage = 1;
+        } else if (selectedRoute === 'scenarios') {
+          this.selectedPage = 2;
+        } else if (selectedRoute === 'solutions') {
+          this.selectedPage = 3;
+        } else if (selectedRoute === 'admin') {
+          this.selectedPage = 4;
+        }
+      },
+
+      ready: function () {
+        this._checkForDefaultRoute();
+      },
+
+      attached: function () {
+        var nav = this.$.appNav;
+        // nav.set('fitInto', div);
+
+        window.requestAnimationFrame(function () {
+          nav.notifyResize();
+        });
+      },
+
+      _checkForDefaultRoute: function () {
         // set default route to /rmd
         var l = window.location;
-        if((l.hash === "#/" || l.hash === "") && l.pathname === "/") {
-          l.hash = "/rmd";
+        if ((l.hash === "#/" || l.hash === "") && l.pathname === "/") {
+          l.hash = "/events";
         }
       },
 
-      _routeChanged: function(newRoute) {
+      _routeChanged: function (newRoute) {
         console.log('new route:', newRoute);
-        if (newRoute.path !== '/rmd') {
-          var tsChart = document.querySelector('rmd-view timeseries-chart');
-          if (tsChart) {
-            tsChart.closeWebSocket();
-          }
-        }
       }
 
     });

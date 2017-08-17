@@ -1,0 +1,52 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-badge/paper-badge.html">
+
+<dom-module id="notification-view">
+  <template>
+    <style>
+      /* :host {
+        display: block;
+      } */
+
+      .div-notif {
+        width: 100px;
+        text-align: center;
+        background-color: #0C1419;
+        color: #024d6b;
+      }
+
+      paper-badge {
+        --paper-badge-background: #146080;
+        --paper-badge-text-color: #fff;
+        margin-left: 6px;
+        margin-top: 18px;
+      }
+
+       :host ::content .badge {
+        padding: 0 5px;
+        border: 1px solid #fff;
+        height: 16px !important;
+        border-radius: 10px !important;
+      }
+
+       :host ::content #badge-text {
+        line-height: 1px;
+      }
+    </style>
+
+    <div class="div-notif">
+      <i id="notif" class="fa fa-bell-o fa-2x"></i>
+      <paper-badge label="999" for="notif"></paper-badge>
+    </div>
+
+  </template>
+  <script>
+    (function () {
+      'use strict';
+
+      Polymer({
+        is: 'notification-view'
+      });
+    })();
+  </script>
+</dom-module>

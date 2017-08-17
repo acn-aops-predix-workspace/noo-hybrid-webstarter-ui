@@ -1,0 +1,519 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../elements/seed-app/seed-app-styles.html">
+
+<dom-module id="problems-view">
+  <template>
+    <style is="custom-style">
+       :host {
+        display: block;
+      }
+
+      .div-header,
+      .div-actions {
+        height: 100px;
+      }
+
+      .div-header {
+        background-color: #1A2932;
+        color: #fff;
+        overflow: hidden;
+      }
+
+      .div-content {
+        background-color: #fff;
+      }
+
+      px-key-value-pair {
+        color: #fff;
+      }
+
+      .txt-blue {
+        color: #09819c;
+      }
+
+      .txt-bold {
+        font-weight: 700;
+      }
+
+      .txt-icon-format {
+        text-shadow: 1px 1px 4px #000000;
+      }
+
+      #span-hidden .span-hidden-label {
+        color: #09819c;
+      }
+
+      #span-hidden #hidden-count {
+        color: #fff;
+      }
+
+      #span-hidden:hover .span-hidden-label,
+      #span-hidden:hover #hidden-count {
+        color: #fff;
+      }
+
+      #span-hidden:hover,
+      #span-hidden:focus {
+        background: #0D3D52;
+        color: #fff;
+        padding: 10px;
+        border-radius: 10px;
+      }
+      /* .active-action {
+        border-bottom: 1px solid #09819c;
+      } */
+
+      #div-actions-problems,
+      #div-actions-warnings,
+      #div-actions-updates {
+        cursor: pointer;
+        outline: none;
+      }
+
+      #div-actions-problems div.active-action,
+      #div-actions-warnings div.active-action,
+      #div-actions-updates div.active-action {
+        border-bottom: 2px solid transparent;
+        transition: opacity 0.5s;
+      }
+
+      #div-actions-problems:hover div.active-action,
+      #div-actions-problems:focus div.active-action,
+      #div-actions-warnings:hover div.active-action,
+      #div-actions-warnings:focus div.active-action,
+      #div-actions-updates:hover div.active-action,
+      #div-actions-updates:focus div.active-action {
+        border-bottom: 2px solid #09819c;
+        transition: opacity 0.5s;
+      }
+
+      #btn-group {
+        border-bottom: 1px solid #fff;
+      }
+
+      #btn-group label {
+        min-width: unset;
+      }
+
+      #btn-group label:hover {
+        border-bottom: 4px solid #0a95b4;
+      }
+
+      #btn-group label,
+      #btn-group input {
+        background-color: transparent;
+        color: white;
+      }
+      /* DATATABLE */
+
+       :host ::content .header--container {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 16px;
+        background-color: #EBEFF2;
+        color: #0a95b4;
+      }
+
+       :host ::content .th {
+        border-bottom: none;
+      }
+
+       :host ::content .tr {
+        border-bottom: 5px solid #EBEFF2;
+      }
+
+       :host ::content .td {
+        background-color: #fff;
+        border-bottom: none;
+        border-top: none;
+      }
+
+      :host ::content .pagination.aha-table {
+        border-bottom: none;
+      }
+
+      .div-content {
+        height: calc(100vh - 190px);
+        overflow: hidden;
+        overflow-y: scroll;
+        background-color: #EBEFF2;
+      }
+
+      .div-footer {
+        position: fixed;
+      }
+    </style>
+
+    <!-- apply imported seed app style module -->
+    <style include="seed-app-styles"></style>
+
+    <div class="div-header">
+      <div class="flex flex--wrap">
+
+        <!-- 25% on a large screen, 50% on a smaller screen, and 100% on mobile -->
+        <div class="u-1/6-desk u-1/6-lap-and-up u-1/1-palm">
+          <div id="div-actions-total" class="flex flex--col flex--center flex--stretch u-lap-and-up-ph div-actions">
+            <div class="u-lap-and-up-pb-- txt-icon-format txt-bold">
+              <span>TOTAL</span><span class="txt-blue"> 3 NEW</span>
+            </div>
+            <div class="flex flex--right">
+              <px-key-value-pair key="" value="12358" size="beta"></px-key-value-pair>
+            </div>
+          </div>
+        </div>
+        <div class="u-1/6-desk u-1/6-lap-and-up u-1/1-palm">
+          <div id="div-actions-problems" tabindex="2" class="flex flex--col flex--center flex--stretch u-lap-and-up-ph div-actions">
+            <div class="u-lap-and-up-pb-- txt-icon-format">
+              <span class="txt-blue"><i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i>PROBLEMS</span>
+            </div>
+            <div class="active-action">
+              <px-key-value-pair key="" value="12253" size="delta"></px-key-value-pair>
+            </div>
+          </div>
+        </div>
+        <div class="u-1/6-desk u-1/6-lap-and-up u-1/1-palm">
+          <div id="div-actions-warnings" tabindex="3" class="flex flex--col flex--center flex--stretch u-lap-and-up-ph div-actions">
+            <div class="u-lap-and-up-pb-- txt-icon-format">
+              <span class="txt-blue"><i class="fa fa-exclamation-circle fa-fw" aria-hidden="true"></i>WARNINGS</span>
+            </div>
+            <div class="active-action">
+              <px-key-value-pair key="" value="103" size="delta"></px-key-value-pair>
+            </div>
+          </div>
+        </div>
+        <div class="u-1/6-desk u-1/6-lap-and-up u-1/1-palm">
+          <div id="div-actions-updates" tabindex="3" class="flex flex--col flex--center flex--stretch u-lap-and-up-ph div-actions">
+            <div class="u-lap-and-up-pb-- txt-icon-format">
+              <span class="txt-blue"><i class="fa fa-refresh fa-fw" aria-hidden="true"></i>UPDATES</span>
+            </div>
+            <div class="active-action">
+              <px-key-value-pair key="" value="14" size="delta"></px-key-value-pair>
+            </div>
+          </div>
+        </div>
+        <div class="u-1/3-desk u-1/3-lap-and-up u-1/1-palm">
+          <div id="div-actions-hidden" class="flex flex--col flex--center flex--stretch u-lap-and-up-ph div-actions">
+            <div class="txt-icon-format">
+              <span id="span-hidden" class="u-lap-and-up-p-">
+                <span class="span-hidden-label"><i class="fa fa-eye-slash fa-fw" aria-hidden="true"></i>HIDDEN</span>
+              <span id="hidden-count" class="u-lap-and-up-pl">201</span>
+              </span>
+            </div>
+            <div class="flex flex--middle u-lap-and-up-pl- u-lap-and-up-pt-">
+              <span class="u-lap-and-up-pr txt-blue txt-icon-format"><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i> SHOW LAST</span>
+              <div id="btn-group" class="btn-group">
+                <input id="id1" name="btn-group" type="radio">
+                <label for="id1" class="btn">ALL</label>
+                <input id="id2" name="btn-group" type="radio">
+                <label for="id2" class="btn">12hr</label>
+                <input id="id3" name="btn-group" type="radio">
+                <label for="id3" class="btn">24hr</label>
+                <input id="id4" name="btn-group" type="radio">
+                <label for="id4" class="btn">36hr</label>
+                <input id="id5" name="btn-group" type="radio">
+                <label for="id5" class="btn">48hr</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-lap-and-up-p div-content">
+      <px-data-table table-data='{{mockData}}' language="en" sortable selectable hide-pagination-control>
+        <px-data-table-column sortable selectable type='html' name='icon' label='ICON'></px-data-table-column>
+        <px-data-table-column sortable selectable name='disruptionDateTime' label='TIME'></px-data-table-column>
+        <px-data-table-column sortable selectable name='flightID' label='FLIGHT'></px-data-table-column>
+        <px-data-table-column sortable selectable name='aircraft' label='ARCFT'></px-data-table-column>
+        <px-data-table-column sortable selectable name='description' label='DESCRIPTION'></px-data-table-column>
+      </px-data-table>
+    </div>
+
+    <!-- <div class="div-footer">
+      <p>This is my footer</p>
+    </div> -->
+
+  </template>
+  <script>
+    (function () {
+      'use strict';
+
+      Polymer({
+        is: 'problems-view',
+
+        properties: {
+
+          mockData: {
+            type: Object,
+            value: function () {
+              return [
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5543-20170712-SPN-GUM-0',
+                  'aircraft': 'E90',
+                  'severity': 'problem',
+                  'disruptionDateTime': '2017-07-12T04:45:00.000Z',
+                  'type': 'Discontiguous Path',
+                  'description': 'The arriving station for flight FL-FZ-5543-20170712-SPN-GUM-0 does not match the departure Station.',
+                  'details': 'Discontiguous path for aircraft E90 for FL-FZ-5543-20170712-SPN-GUM-0.',
+                  'icon': '<i class="fa fa-exclamation-triangle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5544-20170712-IAD-MDT-0',
+                  'aircraft': 'E91',
+                  'severity': 'problem',
+                  'disruptionDateTime': '2017-07-12T13:45:00.000Z',
+                  'type': 'Hard Curfew Violation',
+                  'description': 'Flight FL-FZ-5544-20170712-IAD-MDT-0 arriving MDT at 2017-07-12T14:45:00.000Z.',
+                  'details': 'Hard Curfew Violation for flight FL-FZ-5544-20170712-IAD-MDT-0 arriving MDT at 2017-07-12T14:45:00.000Z.',
+                  'icon': '<i class="fa fa-exclamation-triangle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5545-20170712-IAD-PHL-0',
+                  'aircraft': 'E92',
+                  'severity': 'warning',
+                  'disruptionDateTime': '2017-07-13T04:45:00.000Z',
+                  'type': 'Maintenance',
+                  'description': 'Flight FL-FZ-5545-20170713-IAD-PHL-0 overlaps maintenance event in PHL.',
+                  'details': 'Maintenance for aircraft E92 in PHL.',
+                  'icon': '<i class="fa fa-exclamation-circle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5546-20170713-IAD-PHL-0',
+                  'aircraft': 'E93',
+                  'severity': 'warning',
+                  'disruptionDateTime': '2017-07-13T05:05:00.000Z',
+                  'type': 'Min Ground Time Violation',
+                  'description': 'Flight FL-FZ-554620170713-IAD-PHL-0 have a turn time of 15 which violates the minimum turn time of 20.',
+                  'details': 'Minimum ground time violation for flight FL-FZ-554620170713-IAD-PHL-0.',
+                  'icon': '<i class="fa fa-exclamation-circle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5547-20170713-IAD-PHL-0',
+                  'aircraft': 'E94',
+                  'severity': 'problem',
+                  'disruptionDateTime': '2017-07-13T05:45:00.000Z',
+                  'type': 'Overdue Departure',
+                  'description': 'Flight FL-FZ-5547-20170713-IAD-PHL-0 violates overdue departure limit of 60.',
+                  'details': 'Flight FL-FZ-5547-20170713-IAD-PHL-0 violates overdue departure limit of 60.',
+                  'icon': '<i class="fa fa-exclamation-triangle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5548-20170713-PHL-IAD-0',
+                  'aircraft': 'E95',
+                  'severity': 'problem',
+                  'disruptionDateTime': '2017-07-13T06:05:00.000Z',
+                  'type': 'Route Violation',
+                  'description': 'Subfleet for FL-FZ-5548-20170713-PHL-IAD-0 is not allowable sublfleet for route IAD-PHL.',
+                  'details': 'Route violation for flight FL-FZ-5548-20170713-PHL-IAD-0',
+                  'icon': '<i class="fa fa-exclamation-triangle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5548-20170713-PHL-IAD-0',
+                  'aircraft': 'E96',
+                  'severity': 'warning',
+                  'disruptionDateTime': '2017-07-13T06:45:00.000Z',
+                  'type': 'Soft Curfew Violation',
+                  'description': 'Flight FL-FZ-5548-20170713-PHL-IAD-0 arriving IAD at 2017-07-13T06:25:00.000Z.',
+                  'details': 'Soft curfew violation for flight FL-FZ-5548-20170713-PHL-IAD-0 arriving IAD at 2017-07-13T06:25:00.000Z.',
+                  'icon': '<i class="fa fa-exclamation-circle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5549-20170715-DEN-GTF-0',
+                  'aircraft': 'E97',
+                  'severity': 'warning',
+                  'disruptionDateTime': '2017-07-15T04:05:00.000Z',
+                  'type': 'Subfleet Station Violation',
+                  'description': 'Subfleet for FL-FZ-5549-20170715-DEN-GTF-0 violates the route range for route DEN-GTF.',
+                  'details': 'Subfleet station violation for flight FL-FZ-5549-20170715-DEN-GTF-0.',
+                  'icon': '<i class="fa fa-exclamation-circle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5550-20170715-DEN-GTF-0',
+                  'aircraft': 'E98',
+                  'severity': 'problem',
+                  'disruptionDateTime': '2017-07-15T05:05:00.000Z',
+                  'type': 'Unassigned Flight',
+                  'description': 'Flight FL-FZ-5550-20170715-DEN-GTF-0 has no aircraft assigned.',
+                  'details': 'Flight FL-FZ-5550-20170715-DEN-GTF-0 has no aircraft assigned for route DEN-GTF.',
+                  'icon': '<i class="fa fa-exclamation-triangle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5551-20170715-SPN-GUM-0',
+                  'aircraft': 'E99',
+                  'severity': 'problem',
+                  'disruptionDateTime': '2017-07-15T06:05:00.000Z',
+                  'type': 'Discontiguous Path',
+                  'description': 'The arriving station for flight FL-FZ-5551-20170715-SPN-GUM-0 does not match the departure Station.',
+                  'details': 'Discontiguous path for aircraft E99 for FL-FZ-5551-20170715-SPN-GUM-0.',
+                  'icon': '<i class="fa fa-exclamation-triangle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5552-20170715-BNA-IAD-0',
+                  'aircraft': 'F90',
+                  'severity': 'problem',
+                  'disruptionDateTime': '2017-07-15T07:05:00.000Z',
+                  'type': 'Hard Curfew Violation',
+                  'description': 'Flight FL-FZ-5552-20170715-BNA-IAD-0 arriving IAD arriving at 2017-07-15T07:05:00.000Z.',
+                  'details': 'Hard Curfew Violation for flight FL-FZ-5552-20170715-BNA-IAD-0 arriving IAD at 2017-07-15T07:05:00.000Z.',
+                  'icon': '<i class="fa fa-exclamation-triangle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5553-20170715-BNA-IAD-0',
+                  'aircraft': 'F91',
+                  'severity': 'warning',
+                  'disruptionDateTime': '2017-07-15T08:05:00.000Z',
+                  'type': 'Maintenance',
+                  'description': 'Flight FL-FZ-5553-20170715-BNA-IAD-0 overlaps maintenance event in IAD from 2017-07-15T08:05:00.000Z.',
+                  'details': 'Maintenance for aircraft E92 in PHL.',
+                  'icon': '<i class="fa fa-exclamation-circle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5554-20170715-RIC-ORD-0',
+                  'aircraft': 'F92',
+                  'severity': 'warning',
+                  'disruptionDateTime': '2017-07-15T09:05:00.000Z',
+                  'type': 'Min Ground Time Violation',
+                  'description': 'Flight FL-FZ-5554-20170715-RIC-ORD-0 have a turn time of 15 which violates the minimum turn time of 20.',
+                  'details': 'Minimum ground time violation for flight FL-FZ-5554-20170715-RIC-ORD-0.',
+                  'icon': '<i class="fa fa-exclamation-circle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5555-20170715-RIC-ORD-0',
+                  'aircraft': 'F93',
+                  'severity': 'problem',
+                  'disruptionDateTime': '2017-07-15T10:05:00.000Z',
+                  'type': 'Overdue Departure',
+                  'description': 'Flight FL-FZ-5555-20170715-RIC-ORD-0 violates overdue departure limit of 60.',
+                  'details': 'Flight FL-FZ-5555-20170715-RIC-ORD-0 violates overdue departure limit of 60.',
+                  'icon': '<i class="fa fa-exclamation-triangle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5555-20170715-IAD-RIC-0',
+                  'aircraft': 'F95',
+                  'severity': 'problem',
+                  'disruptionDateTime': '2017-07-15T11:05:00.000Z',
+                  'type': 'Route Violation',
+                  'description': 'Subfleet for FL-FZ-5555-20170715-IAD-RIC-0 is not allowable sublfleet for route IAD-RIC.',
+                  'details': 'Route violation for flight FL-FZ-5555-20170715-IAD-RIC-0.',
+                  'icon': '<i class="fa fa-exclamation-triangle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5556-20170715-BTV-IAD-0',
+                  'aircraft': 'F96',
+                  'severity': 'problem',
+                  'disruptionDateTime': '2017-07-15T12:05:00.000Z',
+                  'type': 'Soft Curfew Violation',
+                  'description': 'Flight FL-FZ-5556-20170715-BTV-IAD-0 arriving IAD arriving at 2017-07-15T12:05:00.000Z.',
+                  'details': 'Soft Curfew Violation for flight FL-FZ-5556-20170715-BTV-IAD-0 arriving IAD arriving at 2017-07-15T12:05:00.000Z.',
+                  'icon': '<i class="fa fa-exclamation-triangle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5556-20170715-DEN-ELP-0',
+                  'aircraft': 'F97',
+                  'severity': 'warning',
+                  'disruptionDateTime': '2017-07-15T13:05:00.000Z',
+                  'type': 'Subfleet Station Violation',
+                  'description': 'Subfleet for FL-FZ-5556-20170715-DEN-ELP-0 violates the route range for route DEN-ELP.',
+                  'details': 'Subfleet station violation for flight FL-FZ-5556-20170715-DEN-ELP-0.',
+                  'icon': '<i class="fa fa-exclamation-circle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5557-20170715-DEN-ELP-0',
+                  'aircraft': 'F98',
+                  'severity': 'problem',
+                  'disruptionDateTime': '2017-07-15T14:05:00.000Z',
+                  'type': 'Unassigned Flight',
+                  'description': 'Flight FL-FZ-5557-20170715-DEN-ELP-0 has no aircraft assigned.',
+                  'details': 'Flight FL-FZ-5557-20170715-DEN-ELP-0 has no aircraft assigned.',
+                  'icon': '<i class="fa fa-exclamation-triangle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5558-20170715-SPN-GUM-0',
+                  'aircraft': 'F99',
+                  'severity': 'problem',
+                  'disruptionDateTime': '2017-07-15T15:05:00.000Z',
+                  'type': 'Discontiguous Path',
+                  'description': 'The arriving station for flight FL-FZ-5558-20170715-SPN-GUM-0 does not match the departure s  tation.',
+                  'details': 'Discontiguous path for aircraft F99 for FL-FZ-5558-20170715-SPN-GUM-0.',
+                  'icon': '<i class="fa fa-exclamation-triangle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5559-20170715-GRR-ORD-0',
+                  'aircraft': 'G90',
+                  'severity': 'problem',
+                  'disruptionDateTime': '2017-07-15T16:05:00.000Z',
+                  'type': 'Hard Curfew Violation',
+                  'description': 'Flight FL-FZ5559-20170715-GRR-ORD-0 arriving ORD at 2017-07-15T16:05:00.000Z.',
+                  'details': 'Hard Curfew Violation for flight FL-FZ5559-20170715-GRR-ORD-0 arriving ORD at 2017-07-15T16:05:00.000Z.',
+                  'icon': '<i class="fa fa-exclamation-triangle"></i>'
+                },
+                {
+                  'tenant': 'FZ',
+                  'state': 'ADD',
+                  'flightID': 'FL-FZ-5560-20170715-LIT-DEN-0',
+                  'aircraft': 'G91',
+                  'severity': 'warning',
+                  'disruptionDateTime': '2017-07-15T17:05:00.000Z',
+                  'type': 'Maintenance',
+                  'description': 'Flight FL-FZ5560-20170715-LIT-DEN-0 overlaps maintenance event in DEN.',
+                  'details': 'Maintenance for aircraft G91 in DEN.',
+                  'icon': '<i class="fa fa-exclamation-circle"></i>'
+                }
+              ]
+            }
+          }
+
+        },
+
+        ready: function () {
+          console.log('Problems ready!');
+        },
+
+        attached: function () {
+        }
+
+      });
+    })();
+  </script>
+</dom-module>

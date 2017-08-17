@@ -1,0 +1,37 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<!-- <link rel="import" href="../../bower_components/px-app-helpers/px-app-header/px-app-header.html" /> -->
+<link rel="import" href="../../bower_components/px-app-helpers/px-app-asset/px-app-asset-behavior-selectable.html" />
+<link rel="import" href="../../bower_components/px-app-helpers/px-app-asset/px-app-asset-behavior-activatable.html" />
+<link rel="import" href="../../bower_components/px-app-helpers/px-app-asset/px-app-asset-behavior-graph.html" />
+<!-- <link rel="import" href="../../bower_components/px-icon-set/px-icon-set.html" /> -->
+
+<dom-module id="noo-navigation">
+  <template>
+    <!-- <style>
+       :host {
+        display: block;
+      }
+    </style> -->
+
+    <div>
+      <px-app-nav items='[
+        { "label" : "Dashboard",  "id" : "dashboard",   "icon" : "px-fea:analysis" },
+        { "label" : "Events",     "id" : "events",      "icon" : "px-fea:analysis" },
+        { "label" : "Scenarios",  "id" : "scenarios",   "icon" : "px-fea:dashboard" },
+        { "label" : "Solutions",  "id" : "solutions",   "icon" : "px-fea:asset" },
+        { "label" : "Admin",      "id" : "admin",       "icon" : "px-fea:administration" }]' selected-route='["home"]'>
+      </px-app-nav>
+    </div>
+
+  </template>
+  <script>
+    (function () {
+      'use strict';
+
+      Polymer({
+        is: 'noo-navigation'
+      });
+    })();
+  </script>
+</dom-module>

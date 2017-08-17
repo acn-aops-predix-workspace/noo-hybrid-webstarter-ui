@@ -1,0 +1,33 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="admin-view">
+  <template>
+    <!-- <style>
+      :host {
+        display: block;
+      }
+    </style> -->
+
+    <div class="div-content">
+      <h1>Admin Content</h1>
+    </div>
+
+  </template>
+  <script>
+    (function() {
+      'use strict';
+        
+      Polymer({
+        is: 'admin-view',
+
+        properties: {
+
+        },
+
+        ready: function () {
+          console.log('Admin ready!');
+        }
+      });
+    })();
+  </script>
+</dom-module>

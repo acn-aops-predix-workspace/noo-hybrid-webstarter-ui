@@ -12,6 +12,8 @@ $desk-wide-width: auto; // defaults to 100%
 $desk-wide-max-width: none; // defaults to 80rem
 $viewport-margin: 0; // defaults to auto
 
+@import "px-defaults-design/_settings.defaults.scss";
+
 // Base
 @import "px-viewport-design/_base.viewport.scss";
 @import "px-flexbox-design/_base.flexbox.scss";
@@ -21,21 +23,22 @@ $viewport-margin: 0; // defaults to auto
 @import "px-meta-lists-design/_meta.lists.scss";
 
 // Objects
-$inuit-enable-btn--bare     : true;
+$inuit-enable-btn--bare: true;
 
 @import "px-buttons-design/_objects.buttons.scss";
 
-$inuit-enable-layout--small : true;
-$inuit-enable-layout--flush : true;
-$inuit-enable-layout--full  : true;
+$inuit-enable-layout--small: true;
+$inuit-enable-layout--flush: true;
+$inuit-enable-layout--full: true;
 
 @import "px-layout-design/_objects.layout.scss";
 
 @import "../../seed-theme.scss";
 
-[role=banner], [role=contentinfo] {
-  height: calculateRem(60px);
-  background: var(--px-seed-header-background-color);
+[role=banner],
+[role=contentinfo] {
+  // height: calculateRem(60px);
+  // background: var(--px-seed-header-background-color);
 }
 
 [role=banner] {
@@ -45,14 +48,13 @@ $inuit-enable-layout--full  : true;
   h3 {
     @include inuit-font-size(20px);
     margin: 0;
-    line-height: calculateRem(60px);
+    // line-height: calculateRem(60px);
     font-weight: normal;
     color: var(--px-seed-header-text-color, $px-page-banner-text-color);
-    display:inline-block;
+    display: inline-block;
     svg {
-      margin-bottom: -.1em;
+      // margin-bottom: -.1em;
     }
-
   }
 
   h3.app-title {
@@ -62,7 +64,6 @@ $inuit-enable-layout--full  : true;
   h3.logo {
     color: var(--px-seed-header-text-color, $gray6);
   }
-
 }
 
 .content-wrapper {
@@ -71,20 +72,23 @@ $inuit-enable-layout--full  : true;
 }
 
 header > div.viewport {
-  margin: 0 15px;
+  // margin: 0 15px;
 }
 
 main {
-  min-height: calc(100vh - #{calculateRem(120px)});
+  // min-height: calc(100vh - #{calculateRem(120px)});
   margin-left: 0;
-  background-color: var(--px-seed-app-main-content-area-background-color, $px-page-main-content-area-background-color);
+  // background-color: var(
+  //   --px-seed-app-main-content-area-background-color,
+  //   $px-page-main-content-area-background-color
+  // );
   overflow-x: hidden;
   @include media-query(portable) {
-    margin-left: calculateRem(55px);
-  };
+    // margin-left: calculateRem(55px);
+  }
   @include media-query(desk) {
     margin-left: 0;
-  };
+  }
   flex: 1;
 }
 
@@ -104,19 +108,49 @@ main {
 }
 
 // Trumps
-$inuit-enable-margins--tiny             : true;
-$inuit-enable-margins--small            : true;
-$inuit-enable-margins--large            : true;
-$inuit-enable-margins--huge             : true;
-$inuit-enable-margins--none             : true;
-$inuit-enable-margins--rtl              : true;
-$inuit-enable-margins--negative-tiny    : true;
-$inuit-enable-paddings                  : true;
-$inuit-enable-paddings--tiny            : true;
-$inuit-enable-paddings--small           : true;
-$inuit-enable-paddings--large           : true;
-$inuit-enable-paddings--huge            : true;
-$inuit-enable-paddings--none            : true;
+$inuit-enable-margins--tiny: true;
+$inuit-enable-margins--small: true;
+$inuit-enable-margins--large: true;
+$inuit-enable-margins--huge: true;
+$inuit-enable-margins--none: true;
+$inuit-enable-margins--rtl: true;
+$inuit-enable-margins--negative-tiny: true;
+$inuit-enable-paddings: true;
+$inuit-enable-paddings--tiny: true;
+$inuit-enable-paddings--small: true;
+$inuit-enable-paddings--large: true;
+$inuit-enable-paddings--huge: true;
+$inuit-enable-paddings--none: true;
 
 @import "px-spacing-design/_trumps.spacing.scss";
 @import "px-widths-design/_trumps.widths.scss";
+
+$inuit-use-fractions: true;
+@import "px-widths-tools-design/_tools.widths.scss";
+
+$inuit-enable-responsive-margins: true;
+$inuit-enable-responsive-margins--tiny: true;
+$inuit-enable-responsive-margins--small: true;
+$inuit-enable-responsive-margins--large: true;
+$inuit-enable-responsive-margins--large: huge;
+$inuit-enable-responsive-margins--negative : true;
+$inuit-enable-responsive-margins--negative-tiny : true;
+$inuit-enable-responsive-margins--negative-small : true;
+$inuit-enable-responsive-margins--negative-large : true;
+$inuit-enable-responsive-margins--negative-huge : true;
+$inuit-enable-responsive-paddings: true;
+$inuit-enable-responsive-paddings--tiny: true;
+$inuit-enable-responsive-paddings--small: true;
+$inuit-enable-responsive-paddings--large: true;
+$inuit-enable-responsive-paddings--large: huge;
+$inuit-enable-responsive-paddings--negative : true;
+$inuit-enable-responsive-paddings--negative-tiny : true;
+$inuit-enable-responsive-paddings--negative-small : true;
+$inuit-enable-responsive-paddings--negative-large : true;
+$inuit-enable-responsive-paddings--negative-huge : true;
+@import 'px-spacing-responsive-design/_trumps.spacing-responsive.scss';
+@import "px-widths-responsive-design/_trumps.widths-responsive.scss";
+
+@import "px-iconography-design/_base.iconography.scss";
+
+@import "px-button-group-design/_objects.button-group.scss";
